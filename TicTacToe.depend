@@ -1,0 +1,25 @@
+# depslib dependency file v1.0
+1589892954 source:e:\luu\tic tac toe\game.cpp
+	<bits/stdc++.h>
+	"GAME.h"
+
+1589891781 e:\luu\tic tac toe\game.h
+
+1589891735 source:e:\luu\tic tac toe\main.cpp
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<windows.h>
+	"PAINT.h"
+	"GAME.h"
+
+1589891064 e:\luu\tic tac toe\paint.h
+	<SDL.h>
+	"GAME.h"
+
+1589891759 source:e:\luu\tic tac toe\paint.cpp
+	<bits/stdc++.h>
+	"PAINT.h"
+	<SDL.h>
+	<SDL_image.h>
+

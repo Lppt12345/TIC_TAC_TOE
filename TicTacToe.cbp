@@ -31,6 +31,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="GAME.cpp" />
+		<Unit filename="GAME.h" />
+		<Unit filename="PAINT.cpp" />
+		<Unit filename="PAINT.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
