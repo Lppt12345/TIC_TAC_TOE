@@ -45,7 +45,7 @@ void RENDER_HUMAN(SDL_Renderer *render, TIC_TAC_TOE &GAME){
     SDL_SetRenderDrawColor(render, 255, 255, 255, 255 );
     for (int i=1;i<N;i++){
         SDL_RenderDrawLine(render, i * CR1, 0 , i * CR1, CD);
-        SDL_RenderDrawLine(render, 0, i * CD1, CR , i*CD1);
+        SDL_RenderDrawLine(render, 0, i * CD1, CR , i * CD1);
     }
     if (GAME.TINH_TRANG == RUNNING) {
         for (int i=0;i<N;i++){
@@ -55,16 +55,13 @@ void RENDER_HUMAN(SDL_Renderer *render, TIC_TAC_TOE &GAME){
             }
         }
     }
-    else RENDER_GAME(render,GAME);
+    else {
+        if (GAME.TINH_TRANG == DRAW) RENDER_DRAW(render,GAME,&Draw);
+        else RENDER_WIN(render,GAME);
+    };
 }
 
-void RENDER_GAME (SDL_Renderer * render,TIC_TAC_TOE &GAME){
-    if (GAME.TINH_TRANG == DRAW) RENDER_WIN_DRAW(render,GAME,&Draw);
-    else if (GAME.TINH_TRANG==PLAYER_1) RENDER_WIN_DRAW(render,GAME,&PLAYER1);
-        else RENDER_WIN_DRAW(render,GAME,&PLAYER2);
-}
-
-void RENDER_WIN_DRAW (SDL_Renderer *render,TIC_TAC_TOE & GAME,const SDL_Color *Color){
+void RENDER_DRAW (SDL_Renderer *render,TIC_TAC_TOE & GAME,const SDL_Color *Color){
     SDL_Color TEMP= *Color;
     for (int i=0;i<N;i++){
             for (int j=0;j<N;j++){
@@ -73,4 +70,57 @@ void RENDER_WIN_DRAW (SDL_Renderer *render,TIC_TAC_TOE & GAME,const SDL_Color *C
             }
     }
 }
+
+void RENDER_WIN(SDL_Renderer * render,TIC_TAC_TOE &GAME){
+    bool check =false;
+    for (int i=0;i<N;i++){
+        if (checkWinHang(GAME,i)== GAME.NGUOI_CHOI) {
+            check= true;
+            RENDER_HANG(render, GAME, i );
+        }
+        else if (checkWinCot(GAME,i) == GAME.NGUOI_CHOI){
+            check = true;
+            RENDER_COT(render, GAME , i);
+        };
+    }
+    if (check==false){
+        if (checkWinCheo1(GAME)== GAME.NGUOI_CHOI) {
+            RENDER_CHEO1(render,GAME);
+        }
+        else if (checkWinCheo2(GAME)== GAME.NGUOI_CHOI){
+            RENDER_CHEO2(render,GAME);
+        };
+    }
+}
+void RENDER_HANG(SDL_Renderer *render,TIC_TAC_TOE &GAME,int hang){
+    RENDER_DRAW (render, GAME, &LOSS);
+    for (int j=0 ;j<N;j++){
+        if (GAME.BANG[hang][j]==PLAYER_1) RENDER_PLAYER1(render,hang,j,&PLAYER1);
+        if (GAME.BANG[hang][j]==PLAYER_2) RENDER_PLAYER2(render,hang,j,&PLAYER2);
+    }
+}
+
+void RENDER_COT(SDL_Renderer *render,TIC_TAC_TOE &GAME,int cot){
+    RENDER_DRAW (render, GAME, &LOSS);
+    for (int i=0 ;i<N;i++){
+        if (GAME.BANG[i][cot]==PLAYER_1) RENDER_PLAYER1(render,i,cot,&PLAYER1);
+        if (GAME.BANG[i][cot]==PLAYER_2) RENDER_PLAYER2(render,i,cot,&PLAYER2);
+    }
+}
+
+void RENDER_CHEO1(SDL_Renderer *render, TIC_TAC_TOE &GAME){
+    RENDER_DRAW (render, GAME, &LOSS);
+    for (int i=0;i<N;i++){
+        if (GAME.BANG[i][i]==PLAYER_1) RENDER_PLAYER1(render,i,i,&PLAYER1);
+        if (GAME.BANG[i][i]==PLAYER_2) RENDER_PLAYER2(render,i,i,&PLAYER2);
+    }
+}
+void RENDER_CHEO2(SDL_Renderer *render, TIC_TAC_TOE &GAME){
+    RENDER_DRAW (render, GAME, &LOSS);
+    for (int i=0;i<N;i++){
+        if (GAME.BANG[i][N-i-1]==PLAYER_1) RENDER_PLAYER1(render,i,N-i-1,&PLAYER1);
+        if (GAME.BANG[i][N-i-1]==PLAYER_2) RENDER_PLAYER2(render,i,N-i-1,&PLAYER2);
+    }
+}
+
 

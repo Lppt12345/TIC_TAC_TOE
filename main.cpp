@@ -45,7 +45,7 @@ int main(int argc, char* argv[]){
                 case SDL_MOUSEBUTTONDOWN : {
                     int hang = event.button.y/CD1;
                     int cot = event.button.x/CR1;
-                    PLAY( hang, cot, GAME );
+                    PLAY_HUMAN( hang, cot, GAME );
                     break;
                 }
                 default : break;
