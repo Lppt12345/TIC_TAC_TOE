@@ -4,6 +4,7 @@
 #include <windows.h>
 #include "PAINT.h"
 #include "GAME.h"
+#include "SDL2.h"
 using namespace std;
 
 int main(int argc, char* argv[]){
@@ -24,6 +25,33 @@ int main(int argc, char* argv[]){
         return -1;
     }
     SDL_Event event;
+    SDL_Rect gRect;
+    SDL_Texture * gTexture = NULL;
+    gTexture = IMG_LoadTexture(render,"anhnen.bmp");
+    gRect.x = 0;
+    gRect.y = 0;
+    gRect.w = CR;
+    gRect.h = CD;
+    SDL_RenderCopy(render,gTexture,NULL,NULL);
+    SDL_RenderPresent(render);
+    bool isRun = true;
+    while (isRun){
+        while (SDL_PollEvent (& event)!=0){
+            switch (event.type){
+                case SDL_QUIT : {
+                    SDL_DestroyWindow(window);
+                    SDL_Quit();
+                }
+                case SDL_KEYDOWN : {
+                    switch (event.key.keysym.sym){
+                        case SDLK_b :goto START;
+                    }
+                }
+                default : break;
+            }
+        }
+
+    }
 
     START:
 
