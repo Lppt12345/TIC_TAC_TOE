@@ -35,8 +35,6 @@
 		<Unit filename="GAME.h" />
 		<Unit filename="PAINT.cpp" />
 		<Unit filename="PAINT.h" />
-		<Unit filename="SDL2.cpp" />
-		<Unit filename="SDL2.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

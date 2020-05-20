@@ -4,7 +4,6 @@
 #include <windows.h>
 #include "PAINT.h"
 #include "GAME.h"
-#include "SDL2.h"
 using namespace std;
 
 int main(int argc, char* argv[]){
@@ -26,12 +25,12 @@ int main(int argc, char* argv[]){
     }
     SDL_Event event;
     SDL_Rect gRect;
-    SDL_Texture * gTexture = NULL;
+    SDL_Texture * gTexture = NULL; // GPU
     gTexture = IMG_LoadTexture(render,"anhnen.bmp");
-    gRect.x = 0;
-    gRect.y = 0;
-    gRect.w = CR;
-    gRect.h = CD;
+    //gRect.x = 0;                  dung de dieu chinh vi tri va kich thuoc render
+    //gRect.y = 0;
+    //gRect.w = CR;
+    //gRect.h = CD;
     SDL_RenderCopy(render,gTexture,NULL,NULL);
     SDL_RenderPresent(render);
     bool isRun = true;

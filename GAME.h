@@ -4,7 +4,7 @@
 int const N = 3;   // ma tran
 int const DD = 3; // so lan ve
 
-float const CD = 600;
+float const CD = 500;
 float const CR = CD;
 float const CD1 = CD/N;
 float const CR1= CR/N;

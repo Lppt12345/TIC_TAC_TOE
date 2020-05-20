@@ -42,7 +42,7 @@ void RENDER_PLAYER2(SDL_Renderer * render, int hang , int cot, const SDL_Color *
 }
 
 void RENDER_HUMAN(SDL_Renderer *render, TIC_TAC_TOE &GAME){
-    SDL_SetRenderDrawColor(render, 255, 255, 255, 255 );
+    SDL_SetRenderDrawColor(render, 0, 0, 255, 255 );
     for (int i =1;i<N;i++){
         for (int j=0;j<DD;j++){
             SDL_RenderDrawLine(render, i * CR1+j, 0 , i * CR1+j, CD);

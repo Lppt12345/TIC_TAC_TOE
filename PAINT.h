@@ -3,7 +3,9 @@
 #include <SDL.h>
 #include "GAME.h"
 
-
+const SDL_Color BlueColor = {0,0,255};
+const SDL_Color OrageColor = {255,165,0};
+const SDL_Color PurpleColor = {128,0,128};
 const SDL_Color LucLam = {0,255,255};
 const SDL_Color YellowColor = {255,255,0};
 const SDL_Color RedColor = {255,0,0};
