@@ -50,8 +50,8 @@ void RENDER_HUMAN(SDL_Renderer *render, TIC_TAC_TOE &GAME){
     if (GAME.TINH_TRANG == RUNNING) {
         for (int i=0;i<N;i++){
             for (int j=0;j<N;j++){
-                if (GAME.BANG[i][j]==PLAYER_1) RENDER_PLAYER1(render,i,j,&PLAYER1);
-                if (GAME.BANG[i][j]==PLAYER_2) RENDER_PLAYER2(render,i,j,&PLAYER2);
+                if (GAME.BANG[i][j]== PLAYER_1) RENDER_PLAYER1(render,i,j,&PLAYER1);
+                if (GAME.BANG[i][j]== PLAYER_2) RENDER_PLAYER2(render,i,j,&PLAYER2);
             }
         }
     }
@@ -77,10 +77,12 @@ void RENDER_WIN(SDL_Renderer * render,TIC_TAC_TOE &GAME){
         if (checkWinHang(GAME,i)== GAME.NGUOI_CHOI) {
             check= true;
             RENDER_HANG(render, GAME, i );
+            break;
         }
         else if (checkWinCot(GAME,i) == GAME.NGUOI_CHOI){
             check = true;
             RENDER_COT(render, GAME , i);
+            break;
         };
     }
     if (check==false){

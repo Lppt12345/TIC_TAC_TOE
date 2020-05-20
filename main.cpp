@@ -23,6 +23,10 @@ int main(int argc, char* argv[]){
         cout<<"KHONG MO DUOC RENDERER"<<SDL_GetError();
         return -1;
     }
+    SDL_Event event;
+
+    START:
+
     TIC_TAC_TOE GAME ;
     for (int i=0;i<N;i++){
         for (int j=0;j<N;j++){
@@ -31,20 +35,19 @@ int main(int argc, char* argv[]){
     }
     GAME.NGUOI_CHOI = PLAYER_1;
     GAME.TINH_TRANG = RUNNING ;
-
-    SDL_Event event;
-    while (GAME.TINH_TRANG != QUIT){
+    bool GAME_RUN = true;
+    while (GAME_RUN == true){
         SDL_SetRenderDrawColor(render,0,0,0,255);
         SDL_RenderClear(render);
-        while (SDL_PollEvent (& event)){
+        while (SDL_PollEvent (& event)!=0){
             switch (event.type){
                 case SDL_QUIT : {
-                    GAME.TINH_TRANG = QUIT;
-                    break;
+                    goto END;
                 }
                 case SDL_MOUSEBUTTONDOWN : {
-                    int hang = event.button.y/CD1;
-                    int cot = event.button.x/CR1;
+                    int hang, cot ;
+                    hang = event.button.y/CD1;
+                    cot = event.button.x/CR1;
                     PLAY_HUMAN( hang, cot, GAME );
                     break;
                 }
@@ -53,7 +56,24 @@ int main(int argc, char* argv[]){
         }
         RENDER_HUMAN(render, GAME);
         SDL_RenderPresent(render);
+        while (GAME.TINH_TRANG != RUNNING){
+            while (SDL_PollEvent (& event)!=0){
+                switch (event.type){
+                    case SDL_QUIT : {
+                        goto END;
+                    }
+                    case SDL_KEYDOWN : {
+                        if (event.key.keysym.sym == SDLK_a) goto START;
+                    }
+                    default : break;
+                }
+            }
+        }
     }
+
+    END:
+
+    SDL_DestroyRenderer(render);
     SDL_DestroyWindow(window);
     SDL_Quit();
     return 0;

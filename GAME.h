@@ -14,7 +14,6 @@ float const PLAYER_2 = 2;
 float const WINP1 = PLAYER_1;
 float const WINP2 = PLAYER_2;
 float const DRAW = 0;
-float const QUIT = -1;
 float const RUNNING = 3;
 
 struct TIC_TAC_TOE{
@@ -22,7 +21,6 @@ struct TIC_TAC_TOE{
     int NGUOI_CHOI;
     int TINH_TRANG;
 };
-
 void PLAY_HUMAN(int hang, int cot, TIC_TAC_TOE &GAME);
 int CheckWin(TIC_TAC_TOE &GAME);
 int checkWinCot(TIC_TAC_TOE &GAME, int cot);
