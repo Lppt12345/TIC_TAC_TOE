@@ -48,27 +48,22 @@ int main(int argc, char* argv[]){
                     int hang, cot ;
                     hang = event.button.y/CD1;
                     cot = event.button.x/CR1;
-                    PLAY_HUMAN( hang, cot, GAME );
+                    if (GAME.TINH_TRANG == RUNNING){
+                        PLAY_HUMAN( hang, cot, GAME );
+                    }
                     break;
+                }
+                case SDL_KEYDOWN : {
+                    switch (event.key.keysym.sym){
+                        case SDLK_e :goto END;
+                        case SDLK_a :goto START;
+                    }
                 }
                 default : break;
             }
         }
         RENDER_HUMAN(render, GAME);
         SDL_RenderPresent(render);
-        while (GAME.TINH_TRANG != RUNNING){
-            while (SDL_PollEvent (& event)!=0){
-                switch (event.type){
-                    case SDL_QUIT : {
-                        goto END;
-                    }
-                    case SDL_KEYDOWN : {
-                        if (event.key.keysym.sym == SDLK_a) goto START;
-                    }
-                    default : break;
-                }
-            }
-        }
     }
 
     END:

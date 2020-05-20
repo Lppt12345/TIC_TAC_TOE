@@ -27,5 +27,4 @@ void RENDER_CHEO1(SDL_Renderer *render, TIC_TAC_TOE &GAME);
 void RENDER_CHEO2(SDL_Renderer *render, TIC_TAC_TOE &GAME);
 
 
-
 #endif // PAINT_H_

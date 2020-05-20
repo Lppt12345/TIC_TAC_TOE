@@ -3,9 +3,9 @@
 	<bits/stdc++.h>
 	"GAME.h"
 
-1589949259 e:\luu\tic tac toe\game.h
+1589991474 e:\luu\tic tac toe\game.h
 
-1589951784 source:e:\luu\tic tac toe\main.cpp
+1589993391 source:e:\luu\tic tac toe\main.cpp
 	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_image.h>
@@ -13,11 +13,11 @@
 	"PAINT.h"
 	"GAME.h"
 
-1589906605 e:\luu\tic tac toe\paint.h
+1589993492 e:\luu\tic tac toe\paint.h
 	<SDL.h>
 	"GAME.h"
 
-1589938243 source:e:\luu\tic tac toe\paint.cpp
+1589992900 source:e:\luu\tic tac toe\paint.cpp
 	<bits/stdc++.h>
 	"PAINT.h"
 	<SDL.h>

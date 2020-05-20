@@ -43,9 +43,11 @@ void RENDER_PLAYER2(SDL_Renderer * render, int hang , int cot, const SDL_Color *
 
 void RENDER_HUMAN(SDL_Renderer *render, TIC_TAC_TOE &GAME){
     SDL_SetRenderDrawColor(render, 255, 255, 255, 255 );
-    for (int i=1;i<N;i++){
-        SDL_RenderDrawLine(render, i * CR1, 0 , i * CR1, CD);
-        SDL_RenderDrawLine(render, 0, i * CD1, CR , i * CD1);
+    for (int i =1;i<N;i++){
+        for (int j=0;j<DD;j++){
+            SDL_RenderDrawLine(render, i * CR1+j, 0 , i * CR1+j, CD);
+            SDL_RenderDrawLine(render, 0, i * CD1+j, CR , i * CD1+j);
+        }
     }
     if (GAME.TINH_TRANG == RUNNING) {
         for (int i=0;i<N;i++){
@@ -124,5 +126,4 @@ void RENDER_CHEO2(SDL_Renderer *render, TIC_TAC_TOE &GAME){
         if (GAME.BANG[i][N-i-1]==PLAYER_2) RENDER_PLAYER2(render,i,N-i-1,&PLAYER2);
     }
 }
-
 

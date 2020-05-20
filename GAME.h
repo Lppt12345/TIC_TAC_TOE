@@ -1,8 +1,8 @@
 #ifndef GAME_H_
 #define GAME_H_
 
-int const N = 3;
-int const DD = 3;
+int const N = 3;   // ma tran
+int const DD = 3; // so lan ve
 
 float const CD = 600;
 float const CR = CD;
