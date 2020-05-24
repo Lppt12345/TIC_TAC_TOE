@@ -31,6 +31,8 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="AI.cpp" />
+		<Unit filename="Ai.h" />
 		<Unit filename="GAME.cpp" />
 		<Unit filename="GAME.h" />
 		<Unit filename="PAINT.cpp" />

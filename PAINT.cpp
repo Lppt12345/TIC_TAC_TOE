@@ -41,24 +41,46 @@ void RENDER_PLAYER2(SDL_Renderer * render, int hang , int cot, const SDL_Color *
     }
 }
 
-void RENDER_HUMAN(SDL_Renderer *render, TIC_TAC_TOE &GAME){
+void RENDER_AI(SDL_Renderer * render, int hang , int cot, const SDL_Color *Color){
+    float quater_small_box = CD1/4;
+    float X = cot * CR1;
+    float Y = hang *CD1;
+    float x1 = quater_small_box + X;
+    float y1 = quater_small_box + Y;
+    float x2 = 3 * quater_small_box + X;
+    float y2 = 3 * quater_small_box + Y;
+    float x3 = x2;
+    float y3 = y1;
+    float x4 = x1;
+    float y4 = y2;
+    SDL_SetRenderDrawColor(render,Color->r,Color->g,Color->b,255);
+    for (int i= 0; i<= DD ; i++){
+        SDL_RenderDrawLine(render,x1+i,y1,x2+i,y2);
+        SDL_RenderDrawLine(render,x3+i,y3,x4+i,y4);
+    }
+}
+
+
+
+void RENDER_GAME(SDL_Renderer *render, TIC_TAC_TOE &GAME){
     SDL_SetRenderDrawColor(render, 0, 0, 255, 255 );
-    for (int i =1;i<N;i++){
+    for (int i =1;i<N;i++){                                      // ve luoi
         for (int j=0;j<DD;j++){
-            SDL_RenderDrawLine(render, i * CR1+j, 0 , i * CR1+j, CD);
-            SDL_RenderDrawLine(render, 0, i * CD1+j, CR , i * CD1+j);
+            SDL_RenderDrawLine(render, i * CR1+j, 0 , i * CR1+j, CD);  // ve cot
+            SDL_RenderDrawLine(render, 0, i * CD1+j, CR , i * CD1+j);   // ve hang
         }
     }
-    if (GAME.TINH_TRANG == RUNNING) {
+    if (GAME.State == RUNNING) {
         for (int i=0;i<N;i++){
             for (int j=0;j<N;j++){
-                if (GAME.BANG[i][j]== PLAYER_1) RENDER_PLAYER1(render,i,j,&PLAYER1);
-                if (GAME.BANG[i][j]== PLAYER_2) RENDER_PLAYER2(render,i,j,&PLAYER2);
+                if (GAME.BANG[i][j]==PLAYER_1)  RENDER_PLAYER1(render,i,j,&PLAYER1);
+                if (GAME.BANG[i][j]==PLAYER_2)  RENDER_PLAYER2(render,i,j,&PLAYER2);
+                if (GAME.BANG[i][j]==AI_NORMAL) RENDER_AI(render,i,j,&AI_Color);
             }
         }
     }
     else {
-        if (GAME.TINH_TRANG == DRAW) RENDER_DRAW(render,GAME,&Draw);
+        if (GAME.State== DRAW) RENDER_DRAW(render,GAME,&Draw);
         else RENDER_WIN(render,GAME);
     };
 }
@@ -66,64 +88,69 @@ void RENDER_HUMAN(SDL_Renderer *render, TIC_TAC_TOE &GAME){
 void RENDER_DRAW (SDL_Renderer *render,TIC_TAC_TOE & GAME,const SDL_Color *Color){
     SDL_Color TEMP= *Color;
     for (int i=0;i<N;i++){
-            for (int j=0;j<N;j++){
-                if (GAME.BANG[i][j]==PLAYER_1) RENDER_PLAYER1(render,i,j,&TEMP);
-                if (GAME.BANG[i][j]==PLAYER_2) RENDER_PLAYER2(render,i,j,&TEMP);
-            }
+        for (int j=0;j<N;j++){
+            if (GAME.BANG[i][j]==PLAYER_1)  RENDER_PLAYER1(render,i,j,&TEMP);
+            if (GAME.BANG[i][j]==PLAYER_2)  RENDER_PLAYER2(render,i,j,&TEMP);
+            if (GAME.BANG[i][j]==AI_NORMAL) RENDER_AI(render,i,j,&TEMP);
+        }
     }
 }
 
 void RENDER_WIN(SDL_Renderer * render,TIC_TAC_TOE &GAME){
     bool check =false;
     for (int i=0;i<N;i++){
-        if (checkWinHang(GAME,i)== GAME.NGUOI_CHOI) {
+        if (checkWinHang(GAME,i)== GAME.Player) {
             check= true;
             RENDER_HANG(render, GAME, i );
             break;
         }
-        else if (checkWinCot(GAME,i) == GAME.NGUOI_CHOI){
+        else if (checkWinCot(GAME,i) == GAME.Player){
             check = true;
             RENDER_COT(render, GAME , i);
             break;
         };
     }
     if (check==false){
-        if (checkWinCheo1(GAME)== GAME.NGUOI_CHOI) {
+        if (checkWinCheo1(GAME)== GAME.Player) {
             RENDER_CHEO1(render,GAME);
         }
-        else if (checkWinCheo2(GAME)== GAME.NGUOI_CHOI){
+        else if (checkWinCheo2(GAME)== GAME.Player){
             RENDER_CHEO2(render,GAME);
         };
     }
 }
 void RENDER_HANG(SDL_Renderer *render,TIC_TAC_TOE &GAME,int hang){
     RENDER_DRAW (render, GAME, &LOSS);
-    for (int j=0 ;j<N;j++){
-        if (GAME.BANG[hang][j]==PLAYER_1) RENDER_PLAYER1(render,hang,j,&PLAYER1);
-        if (GAME.BANG[hang][j]==PLAYER_2) RENDER_PLAYER2(render,hang,j,&PLAYER2);
+    for (int j=0;j<N;j++){
+        if (GAME.BANG[hang][j]==PLAYER_1)  RENDER_PLAYER1(render,hang,j,&PLAYER1);
+        if (GAME.BANG[hang][j]==PLAYER_2)  RENDER_PLAYER2(render,hang,j,&PLAYER2);
+        if (GAME.BANG[hang][j]==AI_NORMAL) RENDER_AI(render,hang,j,&AI_Color);
     }
 }
 
 void RENDER_COT(SDL_Renderer *render,TIC_TAC_TOE &GAME,int cot){
     RENDER_DRAW (render, GAME, &LOSS);
     for (int i=0 ;i<N;i++){
-        if (GAME.BANG[i][cot]==PLAYER_1) RENDER_PLAYER1(render,i,cot,&PLAYER1);
-        if (GAME.BANG[i][cot]==PLAYER_2) RENDER_PLAYER2(render,i,cot,&PLAYER2);
+        if (GAME.BANG[i][cot]==PLAYER_1)  RENDER_PLAYER1(render,i,cot,&PLAYER1);
+        if (GAME.BANG[i][cot]==PLAYER_2)  RENDER_PLAYER2(render,i,cot,&PLAYER2);
+        if (GAME.BANG[i][cot]==AI_NORMAL) RENDER_AI(render,i,cot,&AI_Color);
     }
 }
 
 void RENDER_CHEO1(SDL_Renderer *render, TIC_TAC_TOE &GAME){
     RENDER_DRAW (render, GAME, &LOSS);
     for (int i=0;i<N;i++){
-        if (GAME.BANG[i][i]==PLAYER_1) RENDER_PLAYER1(render,i,i,&PLAYER1);
-        if (GAME.BANG[i][i]==PLAYER_2) RENDER_PLAYER2(render,i,i,&PLAYER2);
+        if (GAME.BANG[i][i]==PLAYER_1)  RENDER_PLAYER1(render,i,i,&PLAYER1);
+        if (GAME.BANG[i][i]==PLAYER_2)  RENDER_PLAYER2(render,i,i,&PLAYER2);
+        if (GAME.BANG[i][i]==AI_NORMAL) RENDER_AI(render,i,i,&AI_Color);
     }
 }
 void RENDER_CHEO2(SDL_Renderer *render, TIC_TAC_TOE &GAME){
     RENDER_DRAW (render, GAME, &LOSS);
     for (int i=0;i<N;i++){
-        if (GAME.BANG[i][N-i-1]==PLAYER_1) RENDER_PLAYER1(render,i,N-i-1,&PLAYER1);
-        if (GAME.BANG[i][N-i-1]==PLAYER_2) RENDER_PLAYER2(render,i,N-i-1,&PLAYER2);
+       if (GAME.BANG[i][N-i-1]==PLAYER_1)  RENDER_PLAYER1(render,i,N-i-1,&PLAYER1);
+       if (GAME.BANG[i][N-i-1]==PLAYER_2)  RENDER_PLAYER2(render,i,N-i-1,&PLAYER2);
+       if (GAME.BANG[i][N-i-1]==AI_NORMAL) RENDER_AI(render,i,N-i-1,&AI_Color);
     }
 }
 

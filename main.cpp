@@ -4,6 +4,8 @@
 #include <windows.h>
 #include "PAINT.h"
 #include "GAME.h"
+#include "AI.h"
+
 using namespace std;
 
 int main(int argc, char* argv[]){
@@ -23,15 +25,21 @@ int main(int argc, char* argv[]){
         cout<<"KHONG MO DUOC RENDERER"<<SDL_GetError();
         return -1;
     }
+
     SDL_Event event;
     SDL_Rect gRect;
-    SDL_Texture * gTexture = NULL; // GPU
-    gTexture = IMG_LoadTexture(render,"anhnen.bmp");
+    SDL_Texture * anhnen = NULL; // GPU
+
+    TIC_TAC_TOE GAME ;
+
+    MENU :
+
+    anhnen = IMG_LoadTexture(render,"anhnen.bmp");
     //gRect.x = 0;                  dung de dieu chinh vi tri va kich thuoc render
     //gRect.y = 0;
     //gRect.w = CR;
     //gRect.h = CD;
-    SDL_RenderCopy(render,gTexture,NULL,NULL);
+    SDL_RenderCopy(render,anhnen,NULL,NULL);
     SDL_RenderPresent(render);
     bool isRun = true;
     while (isRun){
@@ -43,27 +51,58 @@ int main(int argc, char* argv[]){
                 }
                 case SDL_KEYDOWN : {
                     switch (event.key.keysym.sym){
-                        case SDLK_b :goto START;
+                        case SDLK_h :goto HUMAN_GAME;
+                        case SDLK_a :goto AI;
+                        case SDLK_e :goto END;
                     }
                 }
                 default : break;
+
             }
         }
 
     }
 
-    START:
+    HUMAN_GAME:
 
-    TIC_TAC_TOE GAME ;
-    for (int i=0;i<N;i++){
-        for (int j=0;j<N;j++){
-            GAME.BANG[i][j]=0;
+    GAME.BEGIN(PLAYER_1);
+    isRun = true;
+    while (isRun == true){
+        SDL_SetRenderDrawColor(render,0,0,0,255);     // dat mau den cho background
+        SDL_RenderClear(render);
+        while (SDL_PollEvent (& event)!=0){
+            switch (event.type){
+                case SDL_QUIT : {
+                    goto END;
+                }
+                case SDL_MOUSEBUTTONDOWN : {
+                    int hang, cot ;
+                    hang = event.button.y/CD1;
+                    cot = event.button.x/CR1;
+                    if (GAME.State == RUNNING){
+                        PLAY_HUMAN_GAME( hang, cot, GAME );
+                    }
+                    break;
+                }
+                case SDL_KEYDOWN : {
+                    switch (event.key.keysym.sym){
+                        case SDLK_e :goto END;
+                        case SDLK_h :goto HUMAN_GAME;
+                        case SDLK_m :goto MENU;
+                    }
+                }
+                default : break;
+            }
         }
+        RENDER_GAME(render, GAME);
+        SDL_RenderPresent(render);
     }
-    GAME.NGUOI_CHOI = PLAYER_1;
-    GAME.TINH_TRANG = RUNNING ;
-    bool GAME_RUN = true;
-    while (GAME_RUN == true){
+
+    AI:
+
+    GAME.BEGIN(PLAYER_1);
+    isRun = true;
+    while (isRun == true){
         SDL_SetRenderDrawColor(render,0,0,0,255);
         SDL_RenderClear(render);
         while (SDL_PollEvent (& event)!=0){
@@ -75,24 +114,31 @@ int main(int argc, char* argv[]){
                     int hang, cot ;
                     hang = event.button.y/CD1;
                     cot = event.button.x/CR1;
-                    if (GAME.TINH_TRANG == RUNNING){
-                        PLAY_HUMAN( hang, cot, GAME );
+                    if (GAME.State == RUNNING){
+                        if (GAME.BANG[hang][cot] == 0){
+                            GAME.Player = PLAYER_1;
+                            GAME.BANG[hang][cot] = PLAYER_1;
+                            GAME.State = CheckWin(GAME);
+                            if (GAME.State == RUNNING){
+                                AI_TURN (GAME);
+                            }
+                        }
                     }
                     break;
                 }
                 case SDL_KEYDOWN : {
                     switch (event.key.keysym.sym){
                         case SDLK_e :goto END;
-                        case SDLK_a :goto START;
+                        case SDLK_a :goto AI;
+                        case SDLK_m :goto MENU;
                     }
                 }
                 default : break;
             }
         }
-        RENDER_HUMAN(render, GAME);
+        RENDER_GAME(render, GAME);
         SDL_RenderPresent(render);
     }
-
     END:
 
     SDL_DestroyRenderer(render);
