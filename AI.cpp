@@ -1,10 +1,7 @@
 #include <bits/stdc++.h>
 #include "Ai.h"
 #include "GAME.h"
-#include "PAINT.h"
 using namespace std;
-
-
 
 void AI_TURN (TIC_TAC_TOE &GAME){
     GAME.Player = AI_NORMAL;

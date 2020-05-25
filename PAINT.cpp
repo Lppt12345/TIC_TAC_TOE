@@ -35,7 +35,7 @@ void RENDER_PLAYER2(SDL_Renderer * render, int hang , int cot, const SDL_Color *
     float x4 = x1;
     float y4 = y2;
     SDL_SetRenderDrawColor(render,Color->r,Color->g,Color->b,255);
-    for (int i= 0; i<= DD ; i++){
+    for (int i= 0; i<= 2*DD ; i++){
         SDL_RenderDrawLine(render,x1+i,y1,x2+i,y2);
         SDL_RenderDrawLine(render,x3+i,y3,x4+i,y4);
     }
@@ -54,7 +54,7 @@ void RENDER_AI(SDL_Renderer * render, int hang , int cot, const SDL_Color *Color
     float x4 = x1;
     float y4 = y2;
     SDL_SetRenderDrawColor(render,Color->r,Color->g,Color->b,255);
-    for (int i= 0; i<= DD ; i++){
+    for (int i= 0; i<= 2*DD ; i++){
         SDL_RenderDrawLine(render,x1+i,y1,x2+i,y2);
         SDL_RenderDrawLine(render,x3+i,y3,x4+i,y4);
     }

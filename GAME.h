@@ -4,7 +4,7 @@
 int const N = 3;   // ma tran
 int const DD = 3; // so lan ve
 
-float const CD = 500;                       // chieu dai chuong trinh
+float const CD = 500;                // chieu dai cua so
 float const CR = CD;
 float const CD1 = CD/N;
 float const CR1= CR/N;
@@ -30,7 +30,6 @@ struct TIC_TAC_TOE{
     }
 };
 void PLAY_HUMAN_GAME(int hang, int cot, TIC_TAC_TOE &GAME);
-void PLAY_AI(int hang, int cot, TIC_TAC_TOE &GAME);
 int CheckWin(TIC_TAC_TOE &GAME);
 int checkWinCot(TIC_TAC_TOE &GAME, int cot);
 int checkWinHang(TIC_TAC_TOE &GAME, int hang);

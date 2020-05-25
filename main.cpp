@@ -25,23 +25,18 @@ int main(int argc, char* argv[]){
         cout<<"KHONG MO DUOC RENDERER"<<SDL_GetError();
         return -1;
     }
-
     SDL_Event event;
-    SDL_Rect gRect;
     SDL_Texture * anhnen = NULL; // GPU
 
     TIC_TAC_TOE GAME ;
+    bool isRun = true;
 
     MENU :
 
     anhnen = IMG_LoadTexture(render,"anhnen.bmp");
-    //gRect.x = 0;                  dung de dieu chinh vi tri va kich thuoc render
-    //gRect.y = 0;
-    //gRect.w = CR;
-    //gRect.h = CD;
     SDL_RenderCopy(render,anhnen,NULL,NULL);
     SDL_RenderPresent(render);
-    bool isRun = true;
+    isRun = true;
     while (isRun){
         while (SDL_PollEvent (& event)!=0){
             switch (event.type){
@@ -139,6 +134,7 @@ int main(int argc, char* argv[]){
         RENDER_GAME(render, GAME);
         SDL_RenderPresent(render);
     }
+
     END:
 
     SDL_DestroyRenderer(render);
