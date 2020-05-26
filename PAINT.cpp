@@ -3,7 +3,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
-
 void RENDER_PLAYER1(SDL_Renderer * render, int hang , int cot, const SDL_Color *Color){
     float quater_small_box = CD1/4;
     float X = cot * CR1;
@@ -59,8 +58,6 @@ void RENDER_AI(SDL_Renderer * render, int hang , int cot, const SDL_Color *Color
         SDL_RenderDrawLine(render,x3+i,y3,x4+i,y4);
     }
 }
-
-
 
 void RENDER_GAME(SDL_Renderer *render, TIC_TAC_TOE &GAME){
     SDL_SetRenderDrawColor(render, 0, 0, 255, 255 );
@@ -119,6 +116,7 @@ void RENDER_WIN(SDL_Renderer * render,TIC_TAC_TOE &GAME){
         };
     }
 }
+
 void RENDER_HANG(SDL_Renderer *render,TIC_TAC_TOE &GAME,int hang){
     RENDER_DRAW (render, GAME, &LOSS);
     for (int j=0;j<N;j++){
@@ -145,6 +143,7 @@ void RENDER_CHEO1(SDL_Renderer *render, TIC_TAC_TOE &GAME){
         if (GAME.BANG[i][i]==AI_NORMAL) RENDER_AI(render,i,i,&AI_Color);
     }
 }
+
 void RENDER_CHEO2(SDL_Renderer *render, TIC_TAC_TOE &GAME){
     RENDER_DRAW (render, GAME, &LOSS);
     for (int i=0;i<N;i++){
